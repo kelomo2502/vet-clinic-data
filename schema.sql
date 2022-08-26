@@ -1,6 +1,8 @@
+-- SCHEMA
+
 CREATE TABLE animals (
     id BIGSERIAL PRIMARY KEY,
-    name varchar(200), 
+    name varchar(300), 
     date_of_birth date, 
     escape_attempts integer, 
     neutered boolean,
@@ -8,20 +10,20 @@ CREATE TABLE animals (
     species text
 );
 
--- creating tables
+-- THE TABLES
 
 CREATE TABLE owners (
-    id BIGSERIAL PRIMARY KEY, 
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
     full_name text, 
     age integer
 );
 
 CREATE TABLE species (
-    id BIGSERIAL PRIMARY KEY, 
-    name VARCHAR(250)
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
+    name VARCHAR(300)
 );
 
--- Modify animals table:
+-- TABLE MODIFICATIONS
 ALTER TABLE animals DROP COLUMN species;
 ALTER TABLE animals ADD COLUMN species_id integer references species(id);
 ALTER TABLE animals ADD COLUMN owner_id integer references owners(id);
