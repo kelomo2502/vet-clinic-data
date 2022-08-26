@@ -21,9 +21,9 @@ DELETE FROM animals;
 ROLLBACK;
 
 DELETE FROM animals WHERE date_of_birth::date > '2022-01-01';
-SAVEPOINT FRSTDELETE;
+SAVEPOINT sp1;
 UPDATE animals SET weight_kg = weight_kg*-1;
-ROLLBACk TO FRSTDELETE;
+ROLLBACk TO sp1;
 UPDATE animals SET weight_kg = weight_kg*-1 WHERE weight_kg < 0;
 COMMIT;
 
