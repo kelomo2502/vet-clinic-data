@@ -1,6 +1,6 @@
 CREATE TABLE animals (
-    id integer PRIMARY KEY,
-    name varchar(500), 
+    id BIGSERIAL PRIMARY KEY,
+    name varchar(200), 
     date_of_birth date, 
     escape_attempts integer, 
     neutered boolean,
@@ -11,14 +11,14 @@ CREATE TABLE animals (
 -- creating tables
 
 CREATE TABLE owners (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
+    id BIGSERIAL PRIMARY KEY, 
     full_name text, 
     age integer
 );
 
 CREATE TABLE species (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
-    name VARCHAR(200)
+    id BIGSERIAL PRIMARY KEY, 
+    name VARCHAR(250)
 );
 
 -- Modify animals table:
