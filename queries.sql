@@ -6,7 +6,7 @@ SELECT name, escape_attempts FROM animals WHERE weight_kg > 10.5;
 SELECT * FROM animals WHERE neutered = true;
 SELECT * FROM animals WHERE name <> 'Gabumon';
 SELECT * FROM animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
-
+-- Second project
 BEGIN;
  ALTER TABLE animals ADD COLUMN species text;
  UPDATE animals SET species = unspecified;
@@ -20,9 +20,9 @@ DELETE FROM animals;
 ROLLBACK;
 
 DELETE FROM animals WHERE date_of_birth::date > '2022-01-01';
-SAVEPOINT sp1;
+SAVEPOINT FRSTDELETE;
 UPDATE animals SET weight_kg = weight_kg*-1;
-ROLLBACk TO sp1;
+ROLLBACk TO FRSTDELETE;
 UPDATE animals SET weight_kg = weight_kg*-1 WHERE weight_kg < 0;
 COMMIT;
 
@@ -33,6 +33,7 @@ SELECT neutered, SUM(escape_attempts) AS attempts FROM animals GROUP BY neutered
 SELECT name, MIN(weight_kg) AS min_wight,MAX(weight_kg) AS max_weight FROM animals GROUP BY name;
 SELECT name, AVG(escape_attempts) FROM animals WHERE date_of_birth::date >= '1990-01-01' AND date_of_birth::date <= '2000-12-31' GROUP BY name;
 
+-- Write queries (using JOIN)
 SELECT name, date_of_birth, weight_kg, full_name FROM animals JOIN owners ON animals.owner_id = owners.id WHERE full_name = 'Melody Pond';
 SELECT * FROM animals JOIN species ON animals.species_id = species.id WHERE species.id = 1;
 SELECT full_name, name FROM animals RIGHT JOIN owners ON animals.owner_id = owners.id;
