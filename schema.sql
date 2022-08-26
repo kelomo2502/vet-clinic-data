@@ -8,6 +8,7 @@ CREATE TABLE animals (
     species text
 );
 
+-- creating tables
 
 CREATE TABLE owners (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
@@ -20,6 +21,7 @@ CREATE TABLE species (
     name VARCHAR(200)
 );
 
+-- Modify animals table:
 ALTER TABLE animals DROP COLUMN species;
 ALTER TABLE animals ADD COLUMN species_id integer references species(id);
 ALTER TABLE animals ADD COLUMN owner_id integer references owners(id);
