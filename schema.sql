@@ -1,29 +1,57 @@
--- SCHEMA
-
 CREATE TABLE animals (
-    id BIGSERIAL PRIMARY KEY,
-    name varchar(300), 
-    date_of_birth date, 
-    escape_attempts integer, 
-    neutered boolean,
-    weight_kg decimal,
-    species text
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(50),
+    date_of_birth DATE,
+    escape_attempts INT,
+    neutered BOOLEAN,
+    weight_kg DECIMAL
 );
 
--- THE TABLES
+ALTER TABLE animals ADD species VARCHAR(70);
 
-CREATE TABLE owners (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
-    full_name text, 
-    age integer
+CREATE TABLE owners(
+ id INT GENERATED ALWAYS AS IDENTITY,
+ full_name VARCHAR(100),
+ age INT,
+ PRIMARY KEY(id)
 );
 
-CREATE TABLE species (
-    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
-    name VARCHAR(300)
+CREATE TABLE species(
+ id INT GENERATED ALWAYS AS IDENTITY,
+ name VARCHAR(80),
+ PRIMARY KEY(id)
 );
 
--- TABLE MODIFICATIONS
 ALTER TABLE animals DROP COLUMN species;
-ALTER TABLE animals ADD COLUMN species_id integer references species(id);
-ALTER TABLE animals ADD COLUMN owner_id integer references owners(id);
+
+ALTER TABLE animals ADD COLUMN species_id INT
+ REFERENCES species(id)
+ ON DELETE CASCADE;
+ 
+ALTER TABLE animals ADD COLUMN owner_id INT
+ REFERENCES owners(id)
+ ON DELETE CASCADE;
+
+CREATE TABLE vets (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(50),
+	age INT,
+	date_of_graduation DATE
+);
+
+CREATE TABLE specializations (
+	vets_id INT NOT NULL,
+	species_id INT NOT NULL,
+	FOREIGN KEY (vets_id) REFERENCES vets (id) ON DELETE CASCADE,
+	FOREIGN KEY (species_id) REFERENCES species (id) ON DELETE CASCADE,
+	PRIMARY KEY (vets_id, species_id)
+);
+
+CREATE TABLE visits (
+	vets_id INT NOT NULL,
+	animals_id INT NOT NULL,
+    date_of_visit DATE,
+	FOREIGN KEY (vets_id) REFERENCES vets (id) ON DELETE CASCADE,
+	FOREIGN KEY (animals_id) REFERENCES animals (id) ON DELETE CASCADE,
+	PRIMARY KEY (vets_id, animals_id, date_of_visit)
+);
