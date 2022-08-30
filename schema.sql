@@ -55,3 +55,13 @@ CREATE TABLE visits (
 	FOREIGN KEY (animals_id) REFERENCES animals (id) ON DELETE CASCADE,
 	PRIMARY KEY (vets_id, animals_id, date_of_visit)
 );
+-- Add an email column to your owners table
+
+-- performance audit
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+CREATE INDEX animal_id_asc ON visits (animals_id ASC);
+
+CREATE INDEX vet_id_asc ON visits (vets_id ASC);
+
+CREATE INDEX email_asc ON owners (email ASC);
+
