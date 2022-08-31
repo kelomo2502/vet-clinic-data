@@ -25,8 +25,14 @@ create table treatments(id int generated always as identity primary key,
 type varchar(500),
 name varchar(300));
 
+create table medical_histories_treatment(
+    id int generated always as identity primary key,
+    medical_histories_id INT REFERENCES medical_histories(id),
+    treatments_id INT REFERENCES treatments(id)
+);
+
 create index patient_id_index ON medical_histories(patient_id);
-creaate index medical_history_index ON invoices(medical_history_id);
+create index medical_history_index ON invoices(medical_history_id);
 create index invoice_id_index ON invoice_item(invoice_id);
 create index treatment_id_index ON invoice_item(treatment_id);
 create index medical_histories_id_index ON medical_histories_treatment(medical_histories_id);
